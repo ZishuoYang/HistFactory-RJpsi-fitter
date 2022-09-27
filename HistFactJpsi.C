@@ -71,7 +71,7 @@ void HistFactJpsi() {
   // each histo normalized to unity. Not totally necessary here, but convenient
 
 
-  TFile q("Histos_20220901.root");
+  TFile q("Histos.root");
   TH1 *htemp;
   TString mchistos[8]={"sigmu","sigtau","Psi2SMu","JpsiDx","ChiMu","misID","fakeJpsi","Bd2JpsiX"
                         };
@@ -159,7 +159,7 @@ void HistFactJpsi() {
 
 
   // tell histfactory what data to use
-  chan.SetData("h_data_subset", "Histos_20220901.root");
+  chan.SetData("h_data_subset", "Histos.root");
 
 
   // Now that data is set up, start creating our samples
@@ -167,11 +167,11 @@ void HistFactJpsi() {
 
   /*********************** Bc->Jpsimunu (NORM) *******************************/
 
-  RooStats::HistFactory::Sample sigmu("h_sigmu","h_sigmu", "Histos_20220901.root");
+  RooStats::HistFactory::Sample sigmu("h_sigmu","h_sigmu", "Histos.root");
   if(useMuShapeUncerts)
   {
-    sigmu.AddHistoSys("v1mu","h_sigmu_v1m","Histos_20220901.root","","h_sigmu_v1p","Histos_20220901.root","");
-    sigmu.AddHistoSys("v2mu","h_sigmu_v2m","Histos_20220901.root","","h_sigmu_v2p","Histos_20220901.root","");
+    sigmu.AddHistoSys("v1mu","h_sigmu_v1m","Histos.root","","h_sigmu_v1p","Histos.root","");
+    sigmu.AddHistoSys("v2mu","h_sigmu_v2m","Histos.root","","h_sigmu_v2p","Histos.root","");
   }
   if(BBon3d) sigmu.ActivateStatError();
   sigmu.SetNormalizeByTheory(kFALSE);
@@ -181,7 +181,7 @@ void HistFactJpsi() {
   
   /************************* Bc->Jpsitaunu (SIGNAL) *******************************/
 
-  RooStats::HistFactory::Sample sigtau("h_sigtau","h_sigtau", "Histos_20220901.root");
+  RooStats::HistFactory::Sample sigtau("h_sigtau","h_sigtau", "Histos.root");
   if(useTauShapeUncerts)
   {
     sigtau.AddHistoSys("v1mu","h_sigtau_v1m","Histos.root","","h_sigtau_v1p","Histos.root","");
@@ -195,7 +195,7 @@ void HistFactJpsi() {
   
   /************************* Bc->Psi2SMuNu *******************************/
 
-  RooStats::HistFactory::Sample Psi2SMu("h_Psi2SMu","h_Psi2SMu", "Histos_20220901.root");
+  RooStats::HistFactory::Sample Psi2SMu("h_Psi2SMu","h_Psi2SMu", "Histos.root");
   if(BBon3d) Psi2SMu.ActivateStatError();
   Psi2SMu.SetNormalizeByTheory(kFALSE);
   Psi2SMu.AddNormFactor("mcNorm_Psi2SMu", mcN_Psi2SMu, 1e-9, 1.);
@@ -204,7 +204,7 @@ void HistFactJpsi() {
   
  /************************* Bc->JpsiDx *******************************/
 
-  RooStats::HistFactory::Sample JpsiDx("h_JpsiDx","h_JpsiDx", "Histos_20220901.root");
+  RooStats::HistFactory::Sample JpsiDx("h_JpsiDx","h_JpsiDx", "Histos.root");
   if(BBon3d) JpsiDx.ActivateStatError();
   JpsiDx.SetNormalizeByTheory(kFALSE);
   JpsiDx.AddNormFactor("mcNorm_JpsiDx", mcN_JpsiDx, 1e-9, 1.);
@@ -213,7 +213,7 @@ void HistFactJpsi() {
  
  /************************* Bc->Chi_c{1,2}munu *******************************/
 
-  RooStats::HistFactory::Sample ChicMu("h_ChiMu","h_ChiMu", "Histos_20220901.root");
+  RooStats::HistFactory::Sample ChicMu("h_ChiMu","h_ChiMu", "Histos.root");
   if(BBon3d) ChicMu.ActivateStatError();
   ChicMu.SetNormalizeByTheory(kFALSE);
   ChicMu.AddNormFactor("mcNorm_ChicMu", mcN_ChicMu, 1e-9, 1.);
@@ -222,7 +222,7 @@ void HistFactJpsi() {
  
  /************************* Bu,d->JpsiX *******************************/
 
-  RooStats::HistFactory::Sample Bd2JpsiX("h_Bd2JpsiX","h_Bd2JpsiX", "Histos_20220901.root");
+  RooStats::HistFactory::Sample Bd2JpsiX("h_Bd2JpsiX","h_Bd2JpsiX", "Histos.root");
   if(BBon3d) Bd2JpsiX.ActivateStatError();
   Bd2JpsiX.SetNormalizeByTheory(kFALSE);
   Bd2JpsiX.AddNormFactor("mcNorm_Bd2JpsiX", mcN_Bd2JpsiX, 1e-9, 1.);
@@ -231,12 +231,12 @@ void HistFactJpsi() {
 
   /*********************** MisID BKG (FROM DATA)  *******************************/
 
-  RooStats::HistFactory::Sample misID("h_misID","h_misID_smear", "Histos_20220901.root");
+  RooStats::HistFactory::Sample misID("h_misID","h_misID_smear", "Histos.root");
   if(BBon3d) misID.ActivateStatError();
   misID.SetNormalizeByTheory(kFALSE);
   //misID.AddNormFactor("NmisID",RelLumi,1e-6,1e4);
   if (floatMisIDSmear){ // MisID smearing
-	misID.AddHistoSys("misID_smear","h_misID","Histos_20220901.root","","h_misID_doublesmear","Histos_20220901.root","");
+	misID.AddHistoSys("misID_smear","h_misID","Histos.root","","h_misID_doublesmear","Histos.root","");
   }
   misID.AddNormFactor("mcNorm_misID", mcN_misID, 1e-9, 1.);
   misID.AddNormFactor("NmisID",7e3*0.7,1e-6,21e3);
@@ -244,7 +244,7 @@ void HistFactJpsi() {
 
   /*********************** Fake Jpsi BKG (FROM DATA)  *******************************/
 
-  RooStats::HistFactory::Sample fakeJpsi("h_fakeJpsi","h_fakeJpsi", "Histos_20220901.root");
+  RooStats::HistFactory::Sample fakeJpsi("h_fakeJpsi","h_fakeJpsi", "Histos.root");
   if(BBon3d) fakeJpsi.ActivateStatError();
   fakeJpsi.SetNormalizeByTheory(kFALSE);
   fakeJpsi.AddNormFactor("mcNorm_fakeJpsi", mcN_fakeJpsi, 1e-9,1.);
